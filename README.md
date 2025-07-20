@@ -9,14 +9,14 @@ Includes system updating, useful tool installation, and full cleanup — all in 
 
 ## 📦 What's Inside
 
-### 🟢 `updg.sh` — Super Termux Updater
+### 🔄 `updg.sh` — Super Termux Updater
 - Updates package lists and installed packages (`pkg update && upgrade`)
 - Removes unnecessary packages (`autoremove`)
 - Cleans apt cache and temp files
 - Checks internet connection and storage space
 - Output is colorful and well-formatted in framed sections
 
-### 🟩 `install.sh` — Install Essential Utilities
+### 📥 `install.sh` — Install Essential Utilities
 - Installs 30+ must-have tools: `curl`, `git`, `vim`, `figlet`, `lolcat`, `python`, `nmap`, etc.
 - Displays a list with descriptions before install
 - Asks for confirmation
