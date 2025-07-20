@@ -65,3 +65,4 @@ df -h | grep -E '^(/|/data|/dev|/sdcard)'
 
 # === DONE ===
 frame "✅ Termux Super Clean completed!"
+
