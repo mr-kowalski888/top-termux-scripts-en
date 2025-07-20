@@ -1,9 +1,9 @@
 # 🚀 TOP Termux Scripts EN — Best Useful Scripts for Termux (in English)
 
 A collection of powerful, safe, and beautifully formatted shell scripts for Termux.  
-Includes system updating, useful tool installation, and full cleanup — all in Russian.
+Includes system updating, useful tool installation, and full cleanup — all in English.
 
-📁 Repository: [github.com/mr-kowalski888/top-termux-scripts-ru](https://github.com/mr-kowalski888/top-termux-scripts-ru)
+📁 Repository: [github.com/mr-kowalski888/top-termux-scripts-en](https://github.com/mr-kowalski888/top-termux-scripts-en)
 
 ---
 
@@ -35,10 +35,10 @@ Clone the repository, make scripts executable, and run them:
 
 ```bash
 # 📥 Clone the GitHub repository
-git clone https://github.com/mr-kowalski888/top-termux-scripts-ru
+git clone https://github.com/mr-kowalski888/top-termux-scripts-en
 
 # 📂 Enter the project directory
-cd top-termux-scripts-ru
+cd top-termux-scripts-en
 
 # ✅ Make the scripts executable:
 # - updg.sh     — super updater
