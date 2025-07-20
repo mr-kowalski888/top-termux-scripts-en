@@ -1,4 +1,4 @@
-# 🚀 TOP Termux Scripts RU — Best Useful Scripts for Termux (in Russian)
+# 🚀 TOP Termux Scripts EN — Best Useful Scripts for Termux (in English)
 
 A collection of powerful, safe, and beautifully formatted shell scripts for Termux.  
 Includes system updating, useful tool installation, and full cleanup — all in Russian.
