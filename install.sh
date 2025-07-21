@@ -1,101 +1,111 @@
 #!/data/data/com.termux/files/usr/bin/bash
 
 # === COLORS ===
-GREEN="\033[1;32m"
-RED="\033[1;31m"
-BLUE="\033[1;34m"
-YELLOW="\033[1;33m"
-RESET="\033[0m"
+GREEN="\033[1;32m"   # Green
+RED="\033[1;31m"     # Red
+BLUE="\033[1;34m"    # Blue
+YELLOW="\033[1;33m"  # Yellow
+RESET="\033[0m"      # Reset
 
 # === FRAME FUNCTION ===
-frame() {
+print_frame() {
   echo -e "${BLUE}╔════════════════════════════════════════════╗${RESET}"
   echo -e "${BLUE}║ ${YELLOW}$1${RESET}"
   echo -e "${BLUE}╚════════════════════════════════════════════╝${RESET}"
 }
 
 # === ERROR FUNCTION ===
-error_msg() {
+print_error() {
   echo -e "${RED}╔════════════════════════════════════════════╗"
   echo -e "║ ❌ ERROR: $1"
   echo -e "╚════════════════════════════════════════════╝${RESET}"
 }
 
-# === TOOL LIST WITH DESCRIPTIONS ===
-tool_descriptions=(
+# === TOOL DESCRIPTIONS ===
+utility_descriptions=(
   "curl       - transfer data from URLs"
-  "wget       - download files"
+  "wget       - alternative to curl"
   "git        - version control system"
   "nano       - simple text editor"
   "vim        - advanced text editor"
-  "unzip      - extract .zip archives"
+  "unzip      - extract zip archives"
   "tar        - handle .tar archives"
   "zip        - compress files"
   "tree       - directory tree view"
   "coreutils  - basic UNIX commands"
   "htop       - interactive process viewer"
-  "neofetch   - show system info with style"
-  "proot      - run Linux rootfs without root"
+  "neofetch   - system info with style"
+  "proot      - environment isolation"
   "termux-api - access Android features"
-  "openssh    - SSH client/server"
+  "openssh    - SSH client and server"
   "dnsutils   - DNS tools (nslookup, etc.)"
   "busybox    - bundled UNIX tools"
-  "inxi       - full system information"
+  "inxi       - system information"
   "perl       - required for inxi"
   "nmap       - port scanner"
-  "netcat     - network debugging"
   "whois      - domain information"
   "traceroute - trace network path"
   "python     - programming language"
   "python-pip - Python package manager"
   "nodejs     - JavaScript runtime"
-  "php        - PHP interpreter"
+  "php        - PHP language"
   "clang      - C/C++ compiler"
   "ruby       - Ruby language"
-  "golang     - Go programming language"
-  "rust       - Rust programming language"
+  "golang     - Go language"
+  "rust       - Rust language"
   "figlet     - ASCII art banners"
   "toilet     - stylized ASCII banners"
-  "lolcat     - rainbow color output"
-  "apt        - package manager"
-  "pkg        - simplified package manager"
+  "lolcat     - rainbow output (installed via gem)"
 )
 
-# === PACKAGE NAMES ===
-tools=(
+# === PACKAGE LIST FOR pkg ===
+packages=(
   curl wget git nano vim unzip tar zip tree coreutils
   htop neofetch proot termux-api openssh dnsutils busybox inxi perl
-  nmap netcat whois traceroute
+  nmap whois traceroute
   python python-pip nodejs php clang ruby golang rust
-  figlet toilet lolcat apt pkg
+  figlet toilet
 )
 
-# === SHOW PACKAGE LIST BEFORE INSTALLATION ===
+# === SHOW TOOL LIST BEFORE INSTALLATION ===
 clear
-frame "🧰 The following tools will be installed:"
+print_frame "🧰 The following tools will be installed:"
 
-for line in "${tool_descriptions[@]}"; do
-  echo -e "${GREEN}  $line${RESET}"
+for item in "${utility_descriptions[@]}"; do
+  echo -e "${GREEN}  $item${RESET}"
 done
 
 echo
 read -p "❓ Continue installation? (y/n): " confirm
 if [[ $confirm != "y" && $confirm != "Y" ]]; then
-  frame "⛔ Installation cancelled by user"
+  print_frame "⛔ Installation cancelled by user"
   exit 0
 fi
 
-# === START INSTALLATION ===
-frame "🚀 Starting installation of Termux tools..."
+# === UPDATE SYSTEM ===
+print_frame "🔄 Updating package list..."
+yes | pkg update > /dev/null 2>&1
+yes | pkg upgrade > /dev/null 2>&1
 
-for pkg in "${tools[@]}"; do
-  frame "📥 Installing: $pkg"
-  if pkg install -y "$pkg"; then
-    echo -e "${GREEN}✅ Installed: $pkg${RESET}"
+# === INSTALL PACKAGES ===
+print_frame "🚀 Starting tool installation..."
+
+for package in "${packages[@]}"; do
+  print_frame "📥 Installing: $package"
+  if pkg install -y "$package" > /dev/null 2>&1; then
+    echo -e "${GREEN}✅ Installed: $package${RESET}"
   else
-    error_msg "Failed to install: $pkg"
+    print_error "Failed to install: $package"
   fi
 done
 
-# === END ===
-frame "✅ All tools installed successfully!"
+# === INSTALL LOLCAT THROUGH GEM ===
+print_frame "🌈 Installing lolcat via Ruby gem..."
+if gem install lolcat > /dev/null 2>&1; then
+  echo -e "${GREEN}✅ lolcat installed via gem${RESET}"
+else
+  print_error "Failed to install lolcat via gem"
+fi
+
+# === FINAL MESSAGE ===
+print_frame "✅ All tools were installed successfully!"
