@@ -15,7 +15,7 @@ frame() {
 }
 
 # === ERROR FUNCTION ===
-error_msg() {
+error() {
   echo -e "${RED}╔════════════════════════════════════════════╗"
   echo -e "║ ❌ ERROR: $1"
   echo -e "╚════════════════════════════════════════════╝${RESET}"
@@ -23,46 +23,45 @@ error_msg() {
 
 # === START ===
 clear
-frame "🧹 Starting Termux Super Clean"
+frame "🧹 Starting full Termux cleanup"
 
 # === 1. CLEAN APT CACHE ===
-frame "🧼 Cleaning APT package cache..."
+frame "🧼 Cleaning APT cache..."
 if ! apt clean; then
-  error_msg "Failed to clean apt cache"
+  error "Failed to clean apt cache"
 fi
 
 # === 2. AUTOREMOVE UNUSED PACKAGES ===
-frame "🗑️ Autoremoving unused packages..."
+frame "🗑️ Removing unused packages..."
 if ! apt autoremove -y; then
-  error_msg "Autoremove failed"
+  error "Failed to autoremove packages"
 fi
 
-# === 3. CLEAR ~/.cache ===
-frame "📂 Removing ~/.cache..."
-rm -rf ~/.cache/*
+# === 3. REMOVE ~/.cache ===
+frame "📂 Cleaning ~/.cache folder..."
+[[ -d ~/.cache ]] && rm -rf ~/.cache/*
 
-# === 4. CLEAR Termux cache ===
-frame "📂 Removing Termux internal cache..."
-rm -rf /data/data/com.termux/cache/*
+# === 4. CLEAR INTERNAL TERMUX CACHE ===
+frame "📂 Cleaning internal Termux cache..."
+[[ -d /data/data/com.termux/cache ]] && rm -rf /data/data/com.termux/cache/*
 
-# === 5. CLEAR .Trash from sdcard (if exists) ===
+# === 5. REMOVE SD CARD TRASH ===
 frame "🗑️ Removing /sdcard/.Trash..."
 rm -rf /sdcard/.Trash/* 2>/dev/null
 
-# === 6. CLEAR BASH/ZSH HISTORY ===
+# === 6. CLEAR SHELL HISTORY ===
 frame "📜 Clearing shell history..."
 rm -f ~/.bash_history ~/.zsh_history
 
-# === 7. REMOVE LOCK & LOG FILES ===
-frame "🔐 Removing lock & log files..."
+# === 7. REMOVE LOCK AND LOG FILES ===
+frame "🔐 Removing lock and log files..."
 rm -f /data/data/com.termux/files/usr/var/lib/apt/lists/lock
 rm -f /data/data/com.termux/files/usr/var/cache/apt/archives/lock
 rm -f /data/data/com.termux/files/usr/var/lib/dpkg/lock
 
-# === 8. CHECK DISK USAGE ===
-frame "📊 Current disk usage:"
+# === 8. SHOW DISK USAGE ===
+frame "📊 Memory usage:"
 df -h | grep -E '^(/|/data|/dev|/sdcard)'
 
 # === DONE ===
-frame "✅ Termux Super Clean completed!"
-
+frame "✅ Termux cleanup complete!"
